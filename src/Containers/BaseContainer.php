@@ -16,10 +16,18 @@ use Sau\WP\Theme\Carbon\CarbonActions;
 abstract class BaseContainer {
 	protected $container;
 
+	/**
+	 * @param $type
+	 * @param $title
+	 * @return BaseContainer
+	 */
 	public static function init ( $type, $title ): BaseContainer {
-		CarbonActions::carbonFieldsRegisterFields(function () use ( $type, $title ) {
-			return new static($type, $title);
+		$obj = null;
+		CarbonActions::carbonFieldsRegisterFields(function () use ( $type, $title, &$obj ) {
+			$obj = new static($type, $title);
+			return $obj;
 		});
+		return $obj;
 	}
 
 	/**

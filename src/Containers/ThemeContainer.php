@@ -11,11 +11,10 @@ namespace Sau\WP\Theme\Carbon\Containers;
 
 abstract class ThemeContainer extends BaseContainer {
 	/**
-	 * Create carbon container with template options
-	 *
-	 * @param string $title
+	 * @param $title
+	 * @return ThemeContainer
 	 */
-	public function __construct(string $title) {
-		parent::__construct('theme_options', $title);
+	public static function init ( $title ): BaseContainer {
+		return parent::init('theme_options', $title);
 	}
 }
