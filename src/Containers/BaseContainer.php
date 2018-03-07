@@ -17,8 +17,10 @@ abstract class BaseContainer {
 	protected $container;
 
 	/**
-	 * @param $type
-	 * @param $title
+	 * Create container
+	 *
+	 * @param string $type  Container type maybe: post_meta, term_meta, user_meta, theme_options, comment_meta, nav_menu_item
+	 * @param string $title Title for container
 	 * @return BaseContainer
 	 */
 	public static function init ( $type, $title ): BaseContainer {
