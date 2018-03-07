@@ -1,0 +1,24 @@
+{
+  "name": "sau/wp_template_carbon",
+  "description": "Extend template for using Carbon",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "AkinaySau",
+      "email": "akinaysau@gmail.com",
+      "homepage": "http://a-sau.ru",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "htmlburger/carbon-fields": "^2",
+    "sau/library": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sau\\WP\\Theme\\Carbon\\": "/src"
+    }
+  }
+}
