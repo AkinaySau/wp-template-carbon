@@ -11,9 +11,16 @@ namespace Sau\WP\Theme\Carbon\Containers;
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Carbon_Fields\Container\Container as CrbBaseContainer;
+use Sau\WP\Theme\Carbon\CarbonActions;
 
 abstract class BaseContainer {
 	protected $container;
+
+	public static function init ( $type, $title ): BaseContainer {
+		CarbonActions::carbonFieldsRegisterFields(function () use ( $type, $title ) {
+			return new static($type, $title);
+		});
+	}
 
 	/**
 	 * Container constructor.
@@ -21,25 +28,26 @@ abstract class BaseContainer {
 	 * @param string $type  Type container
 	 * @param string $title Title
 	 */
-	public function __construct($type, $title) {
+	final protected function __construct ( $type, $title ) {
 		$this->container = Container::make($type, $title);
 		$this->addFields();
 	}
+
 
 	/**
 	 * Return container
 	 *
 	 * @return CrbBaseContainer
 	 */
-	public function getContainer(): CrbBaseContainer {
+	public function getContainer (): CrbBaseContainer {
 		return $this->container;
 	}
 
 	/**
 	 * Add custom fields
-	 * 
+	 *
 	 * @return void
 	 */
-	abstract protected function addFields();
+	abstract protected function addFields ();
 
 }
