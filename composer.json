@@ -15,7 +15,7 @@
   "require": {
     "php": ">=7.0",
     "htmlburger/carbon-fields": "^2",
-    "sau/library": "dev-master"
+    "sau/library": "^1.0"
   },
   "autoload": {
     "psr-4": {

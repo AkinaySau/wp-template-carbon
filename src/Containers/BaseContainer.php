@@ -21,15 +21,13 @@ abstract class BaseContainer {
 	 *
 	 * @param string $type  Container type maybe: post_meta, term_meta, user_meta, theme_options, comment_meta, nav_menu_item
 	 * @param string $title Title for container
-	 * @return BaseContainer
+	 * @return void
 	 */
-	public static function init ( $type, $title ): BaseContainer {
-		$obj = null;
+	public static function init ( $type, $title ) {
+		$obj = static::class;
 		CarbonActions::carbonFieldsRegisterFields(function () use ( $type, $title, &$obj ) {
-			$obj = new static($type, $title);
-			return $obj;
+			$obj = new $obj($type, $title);
 		});
-		return $obj;
 	}
 
 	/**
