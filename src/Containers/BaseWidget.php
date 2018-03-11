@@ -9,7 +9,7 @@
 namespace Sau\WP\Theme\Carbon\Containers;
 
 
-use Carbon_Fields\Field;
+use Carbon_Fields\Field\Field;
 use Carbon_Fields\Widget;
 use Sau\Lib\Action;
 
@@ -32,89 +32,101 @@ abstract class BaseWidget extends Widget {
 	 */
 	protected $fields;
 
-	static function init () {
+	/**
+	 * @var bool
+	 */
+	protected static $init = false;
+
+	static function init() {
 		$obj = static::class;
-		Action::widgetsInit(function () use ( $obj ) {
-			register_widget($obj);
-		});
+		if ( ! static::$init ) {
+			Action::widgetsInit( function () use ( $obj ) {
+				register_widget( $obj );
+			} );
+			#todo need search how crate double widget
+			static::$init = true;
+		}
 	}
 
-	final public function __construct () {
+	final public function __construct() {
 		$this->widget_id   = $this->setWidgetId();
 		$this->title       = $this->setTitle();
 		$this->description = $this->setDescription();
 		$this->fields      = $this->setFields();
-		$this->setup($this->widget_id, $this->title, $this->description, $this->parseFields());
+		$this->setup( $this->getWidgetId(), $this->getTitle(), $this->getDescription(), $this->parseFields() );
 	}
 
 	/**
 	 * Widget Template
+	 *
 	 * @param $args
 	 * @param $instance
+	 *
 	 * @return string
 	 * todo: add interface
 	 */
-	abstract protected function render ( $args, $instance ): string;
+	abstract protected function render( $args, $instance ): string;
 
-	public function front_end ( $args, $instance ) {
-		echo $this->render($args, $instance);
+	public function front_end( $args, $instance ) {
+		echo $this->render( $args, $instance );
 	}
 
 	/**
 	 * Return array where all element it`s Carbon_Fields\Field
 	 * @return array
 	 */
-	final public function parseFields () {
+	final public function parseFields() {
 		foreach ( $this->fields as $key => $field ) {
-			if ( !$field instanceof Field ) {
-				unset($this->fields[ $key ]);
+			if ( ! $field instanceof Field ) {
+				unset( $this->fields[ $key ] );
 			}
 		}
+
 		return $this->fields;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getWidgetId (): string {
+	public function getWidgetId(): string {
 		return $this->widget_id;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getTitle (): string {
+	public function getTitle(): string {
 		return $this->title;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getDescription (): string {
+	public function getDescription(): string {
 		return $this->description;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getFields (): array {
+	public function getFields(): array {
 		return $this->fields;
 	}
 
 	/**
 	 * @return string
 	 */
-	abstract protected function setWidgetId (): string;
+	abstract protected function setWidgetId(): string;
 
 	/**
 	 * @return string
 	 */
-	abstract protected function setTitle (): string;
+	abstract protected function setTitle(): string;
 
 	/**
 	 * @return string
 	 */
-	protected function setDescription () {
+	protected function setDescription() {
 		return '';
 	}
 
@@ -122,7 +134,7 @@ abstract class BaseWidget extends Widget {
 	 *
 	 * @return array
 	 */
-	abstract protected function setFields (): array;
+	abstract protected function setFields(): array;
 
 
 }
